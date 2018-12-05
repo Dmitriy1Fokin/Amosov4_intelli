@@ -1,50 +1,43 @@
-import java.util.HashMap;
-import java.util.Map;
-
 public class Criterion
 {
-    private float sumOfCriteriaWeight;
-    private Map<String, Float> mapCriteria;
+    private String name;
+    private float criteria;
+    private int[] arrOfPriority;
 
-    public Criterion()
+    public Criterion(String name, float criteria, int[] arrOfPriority)
     {
-        sumOfCriteriaWeight = 0;
-        mapCriteria = new HashMap<>();
-    }
-    public void add(String nameCriteria, float criterionWeight)
-    {
-        if((sumOfCriteriaWeight + criterionWeight) > 1)
-            System.out.println("Total weight of all critetion can not be more then 1!!!");
-        else
-        {
-            mapCriteria.put(nameCriteria, criterionWeight);
-            sumOfCriteriaWeight += criterionWeight;
-        }
+        this.name = name;
+        this.criteria = criteria;
+        this.arrOfPriority = arrOfPriority;
     }
 
-    public void delete(String nameCriteria)
+    public String getName()
     {
-        sumOfCriteriaWeight -= mapCriteria.get(nameCriteria);
-        mapCriteria.remove(nameCriteria);
+        return name;
     }
 
-    public void show()
+    public float getCriteria()
     {
-        System.out.println("Critetrion:");
-        //mapCriteria.forEach((k, v) -> System.out.println(k + "\t" + v));
-        int i = 0;
-        for(Map.Entry<String, Float> entry : mapCriteria.entrySet())
-        {
-            //i ++;
-            String key = entry.getKey();
-            float value = entry.getValue();
-            System.out.println(++i + ".\t " + key + " = " + value);
-        }
-
+        return criteria;
     }
 
-    public int getCount()
+    public int[] getArrOfPriority()
     {
-        return mapCriteria.size();
+        return arrOfPriority;
+    }
+
+    public void changeValue(String name)
+    {
+        this.name = name;
+    }
+
+    public void changeValue(float criteria)
+    {
+        this.criteria = criteria;
+    }
+
+    public void changeValue(int[] arrOfPriority)
+    {
+        this.arrOfPriority = arrOfPriority;
     }
 }
