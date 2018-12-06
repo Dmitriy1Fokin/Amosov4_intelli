@@ -3,6 +3,8 @@ import java.util.ArrayList;
 public class Task4
 {
     private static ArrayList<String> arrOfSolutions;
+    private static ArrayList<Criterion> arrOfCriterion;
+    private static ArrayList<byte[][]> arrOfBO;
 
     public static void main(String[] args)
     {
@@ -14,7 +16,10 @@ public class Task4
         arrOfSolutions.add("Nissan Almera");
         arrOfSolutions.add("Volkswagen Polo");
         arrOfSolutions.add("Skoda Rapid");
-        showSolutions();
+
+        System.out.println("Возможные решения:");
+        ShowSolutions(arrOfSolutions);
+        System.out.println();
 
         int [] costAuto = {-723, -561, -627, -965, -572, -499, -772};
         int [] klirens = {15, 18, 17, 16, 18, 17, 15};
@@ -25,7 +30,7 @@ public class Task4
         int [] liquidity = {1, 1, 1, 1, 0, 1, 1};
         int [] fuelConsumption = {1, 1, 1, 0, 0, 1, 1};
 
-        ArrayList<Criterion> arrOfCriterion = new ArrayList<>();
+        arrOfCriterion = new ArrayList<>();
         arrOfCriterion.add(new Criterion("Стоимость авто", (float)0.2, costAuto));
         arrOfCriterion.add(new Criterion("Клиренс", (float)0.05, klirens));
         arrOfCriterion.add(new Criterion("Стоимость обслуживания", (float)0.10, costService));
@@ -35,45 +40,66 @@ public class Task4
         arrOfCriterion.add(new Criterion("Ликвидность", (float)0.1, liquidity));
         arrOfCriterion.add(new Criterion("Расход топлива", (float)0.1, fuelConsumption));
 
-        CreateBO(arrOfSolutions, arrOfCriterion);
+        System.out.println("Критерии:");
+        ShowCriterion(arrOfCriterion);
+        System.out.println();
+
+        arrOfBO = new ArrayList<>();
+        arrOfBO = CreateBO(arrOfSolutions, arrOfCriterion);
+
+        System.out.println("Бинарные отношения для каждого критерия значимости:");
+        ShowBO(arrOfBO);
+        System.out.println();
     }
 
-    private static void showSolutions()
+    private static void ShowSolutions(ArrayList<String> arr)
     {
         int i = 0;
-        for (String str : arrOfSolutions)
-        {
+        for (String str : arr)
             System.out.println(++i + ".\t" + str);
-        }
     }
 
-    private static void CreateBO(ArrayList<String> solutions, ArrayList<Criterion> arrOfCriterion)
+    private static void ShowCriterion(ArrayList<Criterion> arr)
     {
-        ArrayList<byte[][]> arrOfBO = new ArrayList<>();
-        byte[][] bo = new byte[solutions.size()][solutions.size()];/////////////////////////////////
+        int i = 0;
+        for(Criterion crit : arr)
+            System.out.println(++i + ".\t" + crit.getName());
+
+    }
+
+    private static ArrayList<byte[][]> CreateBO(ArrayList<String> solutions, ArrayList<Criterion> arrOfCriterion)
+    {
+        ArrayList<byte[][]> arr = new ArrayList<>();
+        int k = 0;
 
         for(Criterion crit : arrOfCriterion)
         {
-
+            arr.add(new byte[solutions.size()][solutions.size()]);
+            byte[][] bo = arr.get(k++);
             for(int i = 0; i < solutions.size(); i++)
                 for(int j = 0; j < solutions.size(); j++)
                     if(crit.getArrOfPriority()[i] >= crit.getArrOfPriority()[j])
                         bo[i][j] = 1;
                     else
                         bo[i][j] = 0;
-
-             arrOfBO.add(bo);/////////////////////////////////////////
         }
 
-        for(byte[][] printBO : arrOfBO)
-        {
-            for(int i = 0; i < solutions.size(); i++)
-            {
-                for (int j = 0; j < solutions.size(); j++)
-                    System.out.print(printBO[i][j] + "\t");
-                System.out.println();
-            }
-            System.out.println();
-        }
+        return  arr;
     }
+
+    private static void ShowBO(ArrayList<byte[][]> arr)
+    {
+       int k = 0;
+       for(byte[][] printBO : arr)
+       {
+           System.out.println(arrOfCriterion.get(k++).getName() + ":");
+           for(int i = 0; i < arrOfSolutions.size(); i++)
+           {
+               for (int j = 0; j < arrOfSolutions.size(); j++)
+                   System.out.print(printBO[i][j] + "\t");
+               System.out.println();
+           }
+       }
+    }
+
 }
