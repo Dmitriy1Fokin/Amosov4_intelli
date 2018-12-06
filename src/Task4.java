@@ -50,6 +50,29 @@ public class Task4
         System.out.println("Бинарные отношения для каждого критерия значимости:");
         ShowBO(arrOfBO);
         System.out.println();
+
+        System.out.println("Механизм доминирования:");
+        int sumOfDominence[] = new int[arrOfSolutions.size()];
+        sumOfDominence = MechanismDominance(arrOfBO);
+        System.out.println();
+
+        System.out.println("Общее решение по механизму доминирования:");
+        ShowSumOFDominance(sumOfDominence);
+        System.out.println();
+
+        System.out.println("Наилучший вариант:");
+        int max = 0;
+        for(int i = 0; i < arrOfSolutions.size(); i++)
+        {
+            if(max < sumOfDominence[i])
+                max = sumOfDominence[i];
+        }
+        for(int i = 0; i < arrOfSolutions.size(); i++)
+        {
+            if(sumOfDominence[i] == max)
+                System.out.println(i + 1 + ". " + arrOfSolutions.get(i) + " - " + max);
+        }
+
     }
 
     private static void ShowSolutions(ArrayList<String> arr)
@@ -70,12 +93,12 @@ public class Task4
     private static ArrayList<byte[][]> CreateBO(ArrayList<String> solutions, ArrayList<Criterion> arrOfCriterion)
     {
         ArrayList<byte[][]> arr = new ArrayList<>();
-        int k = 0;
+        int index = 0;
 
         for(Criterion crit : arrOfCriterion)
         {
             arr.add(new byte[solutions.size()][solutions.size()]);
-            byte[][] bo = arr.get(k++);
+            byte[][] bo = arr.get(index++);
             for(int i = 0; i < solutions.size(); i++)
                 for(int j = 0; j < solutions.size(); j++)
                     if(crit.getArrOfPriority()[i] >= crit.getArrOfPriority()[j])
@@ -89,10 +112,10 @@ public class Task4
 
     private static void ShowBO(ArrayList<byte[][]> arr)
     {
-       int k = 0;
+       int index = 0;
        for(byte[][] printBO : arr)
        {
-           System.out.println(arrOfCriterion.get(k++).getName() + ":");
+           System.out.println(arrOfCriterion.get(index++).getName() + ":");
            for(int i = 0; i < arrOfSolutions.size(); i++)
            {
                for (int j = 0; j < arrOfSolutions.size(); j++)
@@ -100,6 +123,43 @@ public class Task4
                System.out.println();
            }
        }
+    }
+
+    private  static int[] MechanismDominance(ArrayList<byte[][]> arrBO)
+    {
+        int count;
+        int index = 0;
+        int[] sum = new int[arrOfSolutions.size()];
+
+        for(byte[][] arr : arrBO)
+        {
+            System.out.print(++index + ". " + arrOfCriterion.get(index-1).getName() + ": ");
+            for(int i = 0; i < arrOfSolutions.size(); i++)
+            {
+                count = 0;
+                for (int j = 0; j < arrOfSolutions.size(); j++)
+                    if ((i != j) && (arr[i][j] == 1))
+                        count++;
+
+                if(count == arrOfSolutions.size() - 1)
+                    {
+                        System.out.print(i + 1 + " ");
+                        sum[i] ++;
+                    }
+            }
+            System.out.println();
+        }
+        return sum;
+    }
+
+    private static void ShowSumOFDominance(int[] arr)
+    {
+        int i = 0;
+
+        for(String str : arrOfSolutions)
+        {
+            System.out.println(++i + ". " + str + ": " + arr[i-1]);
+        }
     }
 
 }
