@@ -77,6 +77,14 @@ public class Task4
         BestDominanceLocking(sumOfLocking);
         System.out.println();
 
+        System.out.println("Механизм турнирный:");
+        float[] sumOfTournament = MechanismTournament(arrOfBO);
+        System.out.println();
+
+        System.out.println("Общее решение по механизму блокировки:");
+
+
+
     }
 
     private static void ShowSolutions(ArrayList<String> arr)
@@ -187,7 +195,8 @@ public class Task4
         int index = 0;
         int[] sum = new int[arrOfSolutions.size()];
 
-        for(byte[][] arr : arrBO) {
+        for(byte[][] arr : arrBO)
+        {
             System.out.print(++index + ". " + arrOfCriterion.get(index - 1).getName() + ": ");
             for (int j = 0; j < arrOfSolutions.size(); j++) {
                 count = 0;
@@ -199,6 +208,39 @@ public class Task4
                     System.out.print(j + 1 + " ");
                     sum[j]++;
                 }
+            }
+            System.out.println();
+        }
+        return sum;
+    }
+
+    private static float[] MechanismTournament(ArrayList<byte[][]> arrBO)
+    {
+        float[] sum = new float[arrOfSolutions.size()];
+        int index = 0;
+        ArrayList<String> arrOfSolutionsSorted = new ArrayList<>(arrOfSolutions);
+
+
+        for(byte[][] arr : arrBO)
+        {
+            System.out.println(++index + ". " + arrOfCriterion.get(index - 1).getName() + ": ");
+            for(int i = 0; i < arrOfSolutions.size(); i++)
+            {
+                for (int j = 0; j < arrOfSolutions.size(); j++) {
+                    if ((arr[i][j] == 1) && (i != j))
+                    {
+                        if (arr[j][i] == 0)
+                            sum[i] += 1;
+                        else
+                            sum[i] += 0.5;
+                    } else {
+                        if (arr[j][i] == 0)
+                            sum[i] += 0.5;
+                    }
+
+                }
+                sum[i] = sum[i] * arrOfCriterion.get(index - 1).getCriteria();
+                System.out.println(i+1 + ". " + arrOfSolutions.get(i) + " - " + sum[i]);
             }
             System.out.println();
         }
