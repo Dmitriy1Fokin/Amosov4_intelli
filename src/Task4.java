@@ -52,26 +52,30 @@ public class Task4
         System.out.println();
 
         System.out.println("Механизм доминирования:");
-        int sumOfDominence[] = new int[arrOfSolutions.size()];
+        int[] sumOfDominence;
         sumOfDominence = MechanismDominance(arrOfBO);
         System.out.println();
 
         System.out.println("Общее решение по механизму доминирования:");
-        ShowSumOFDominance(sumOfDominence);
+        ShowSumOFDominanceLockng(sumOfDominence);
         System.out.println();
 
         System.out.println("Наилучший вариант:");
-        int max = 0;
-        for(int i = 0; i < arrOfSolutions.size(); i++)
-        {
-            if(max < sumOfDominence[i])
-                max = sumOfDominence[i];
-        }
-        for(int i = 0; i < arrOfSolutions.size(); i++)
-        {
-            if(sumOfDominence[i] == max)
-                System.out.println(i + 1 + ". " + arrOfSolutions.get(i) + " - " + max);
-        }
+        BestDominanceLocking(sumOfDominence);
+        System.out.println();
+
+        System.out.println("Механизм блокировок:");
+        int[] sumOfLocking;
+        sumOfLocking = MechanismLocking(arrOfBO);
+        System.out.println();
+
+        System.out.println("Общее решение по механизму блокировки:");
+        ShowSumOFDominanceLockng(sumOfLocking);
+        System.out.println();
+
+        System.out.println("Наилучший вариант:");
+        BestDominanceLocking(sumOfLocking);
+        System.out.println();
 
     }
 
@@ -152,7 +156,7 @@ public class Task4
         return sum;
     }
 
-    private static void ShowSumOFDominance(int[] arr)
+    private static void ShowSumOFDominanceLockng(int[] arr)
     {
         int i = 0;
 
@@ -160,6 +164,45 @@ public class Task4
         {
             System.out.println(++i + ". " + str + ": " + arr[i-1]);
         }
+    }
+
+    private static void BestDominanceLocking(int[] arr)
+    {
+        int max = 0;
+        for(int i = 0; i < arrOfSolutions.size(); i++)
+        {
+            if(max < arr[i])
+                max = arr[i];
+        }
+        for(int i = 0; i < arrOfSolutions.size(); i++)
+        {
+            if(arr[i] == max)
+                System.out.println(i + 1 + ". " + arrOfSolutions.get(i) + " - " + max);
+        }
+    }
+
+    private static int[] MechanismLocking(ArrayList<byte[][]> arrBO)
+    {
+        int count;
+        int index = 0;
+        int[] sum = new int[arrOfSolutions.size()];
+
+        for(byte[][] arr : arrBO) {
+            System.out.print(++index + ". " + arrOfCriterion.get(index - 1).getName() + ": ");
+            for (int j = 0; j < arrOfSolutions.size(); j++) {
+                count = 0;
+                for (int i = 0; i < arrOfSolutions.size(); i++)
+                    if ((j != i) && (arr[i][j] == 1))
+                        count++;
+
+                if (count == arrOfSolutions.size() - 1) {
+                    System.out.print(j + 1 + " ");
+                    sum[j]++;
+                }
+            }
+            System.out.println();
+        }
+        return sum;
     }
 
 }
