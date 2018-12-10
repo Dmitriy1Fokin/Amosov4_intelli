@@ -1,10 +1,10 @@
 public class Criterion
 {
     private String name;
-    private float criteria;
+    private double criteria;
     private int[] arrOfPriority;
 
-    public Criterion(String name, float criteria, int[] arrOfPriority)
+    public Criterion(String name, double criteria, int[] arrOfPriority)
     {
         this.name = name;
         this.criteria = criteria;
@@ -16,7 +16,7 @@ public class Criterion
         return name;
     }
 
-    public float getCriteria()
+    public double getCriteria()
     {
         return criteria;
     }
@@ -31,7 +31,7 @@ public class Criterion
         this.name = name;
     }
 
-    public void changeValue(float criteria)
+    public void changeValue(double criteria)
     {
         this.criteria = criteria;
     }

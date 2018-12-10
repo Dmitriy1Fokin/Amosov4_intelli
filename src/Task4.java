@@ -31,14 +31,14 @@ public class Task4
         int [] fuelConsumption = {1, 1, 1, 0, 0, 1, 1};
 
         arrOfCriterion = new ArrayList<>();
-        arrOfCriterion.add(new Criterion("Стоимость авто", (float)0.2, costAuto));
-        arrOfCriterion.add(new Criterion("Клиренс", (float)0.05, klirens));
-        arrOfCriterion.add(new Criterion("Стоимость обслуживания", (float)0.10, costService));
-        arrOfCriterion.add(new Criterion("Надежность", (float)0.15, reliability));
-        arrOfCriterion.add(new Criterion("Безопасность", (float)0.2, safety));
-        arrOfCriterion.add(new Criterion("Комплектация", (float)0.1, equipment));
-        arrOfCriterion.add(new Criterion("Ликвидность", (float)0.1, liquidity));
-        arrOfCriterion.add(new Criterion("Расход топлива", (float)0.1, fuelConsumption));
+        arrOfCriterion.add(new Criterion("Стоимость авто", 0.2, costAuto));
+        arrOfCriterion.add(new Criterion("Клиренс", 0.05, klirens));
+        arrOfCriterion.add(new Criterion("Стоимость обслуживания", 0.10, costService));
+        arrOfCriterion.add(new Criterion("Надежность", 0.15, reliability));
+        arrOfCriterion.add(new Criterion("Безопасность", 0.2, safety));
+        arrOfCriterion.add(new Criterion("Комплектация", 0.1, equipment));
+        arrOfCriterion.add(new Criterion("Ликвидность", 0.1, liquidity));
+        arrOfCriterion.add(new Criterion("Расход топлива", 0.1, fuelConsumption));
 
         System.out.println("Критерии:");
         ShowCriterion(arrOfCriterion);
@@ -78,11 +78,15 @@ public class Task4
         System.out.println();
 
         System.out.println("Механизм турнирный:");
-        float[] sumOfTournament = MechanismTournament(arrOfBO);
+        double[] sumOfTournament = MechanismTournament(arrOfBO);
         System.out.println();
 
-        System.out.println("Общее решение по механизму блокировки:");
-
+        System.out.println("Общее решение по турнирному механизму:");
+        int index = 0;
+        for(String str : arrOfSolutions)
+        {
+            System.out.println(str + "- " + sumOfTournament[index++]);
+        }
 
 
     }
@@ -214,12 +218,13 @@ public class Task4
         return sum;
     }
 
-    private static float[] MechanismTournament(ArrayList<byte[][]> arrBO)
+    private static double[] MechanismTournament(ArrayList<byte[][]> arrBO)
     {
-        float[] sum = new float[arrOfSolutions.size()];
+        double[] sum = new double[arrOfSolutions.size()];
+        double[] totalWeight = new double[arrOfSolutions.size()];
         int index = 0;
         ArrayList<String> arrOfSolutionsSorted = new ArrayList<>(arrOfSolutions);
-
+        double[] sumSorted = new double[arrOfSolutions.size()];
 
         for(byte[][] arr : arrBO)
         {
@@ -241,10 +246,36 @@ public class Task4
                 }
                 sum[i] = sum[i] * arrOfCriterion.get(index - 1).getCriteria();
                 System.out.println(i+1 + ". " + arrOfSolutions.get(i) + " - " + sum[i]);
+                totalWeight[i] += sum[i];
+                //System.out.println(totalWeight[i]);
             }
+
             System.out.println();
         }
-        return sum;
+
+        sumSorted = totalWeight;
+        for(int i = 0; i < arrOfSolutions.size(); i++)
+        {
+            for(int j = 0; j < arrOfSolutions.size(); j++)
+            {
+                if(sumSorted[i] < sumSorted[j])
+                {
+                    double temp = sumSorted[i];
+                    sumSorted[i] = sumSorted[j];
+                    sumSorted[j] = temp;
+                    String str = arrOfSolutionsSorted.get(i);
+                    arrOfSolutionsSorted.set(i, arrOfSolutionsSorted.get(j));
+                    arrOfSolutionsSorted.set(j, str);
+                }
+            }
+        }
+
+
+        for(int i = 0; i < arrOfSolutionsSorted.size(); i++)
+        {
+            System.out.println(arrOfSolutionsSorted.get(i) + " - " + sumSorted[i]);
+        }
+        return totalWeight;
     }
 
 }
