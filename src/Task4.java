@@ -1,3 +1,5 @@
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class Task4
@@ -5,9 +7,12 @@ public class Task4
     private static ArrayList<String> arrOfSolutions;
     private static ArrayList<Criterion> arrOfCriterion;
     private static ArrayList<byte[][]> arrOfBO;
+    private static FileWriter writer;
 
-    public static void main(String[] args)
+    public static void main(String[] args) throws IOException
     {
+        writer = new FileWriter("Output");
+
         arrOfSolutions = new ArrayList<>();
         arrOfSolutions.add("Kia rio");
         arrOfSolutions.add("Renault Logan");
@@ -17,7 +22,9 @@ public class Task4
         arrOfSolutions.add("Volkswagen Polo");
         arrOfSolutions.add("Skoda Rapid");
 
-        System.out.println("Возможные решения:");
+        String text = "Возможные решения:\n";
+        System.out.print(text);
+        writer.write(text);
         ShowSolutions(arrOfSolutions);
         System.out.println();
 
@@ -40,69 +47,129 @@ public class Task4
         arrOfCriterion.add(new Criterion("Ликвидность", 0.1, liquidity));
         arrOfCriterion.add(new Criterion("Расход топлива", 0.1, fuelConsumption));
 
-        System.out.println("Критерии:");
+        text = "Критерии:\n";
+        System.out.print(text);
+        writer.write(text);
         ShowCriterion(arrOfCriterion);
         System.out.println();
+        writer.write("\n");
 
         arrOfBO = new ArrayList<>();
         arrOfBO = CreateBO(arrOfSolutions, arrOfCriterion);
 
-        System.out.println("Бинарные отношения для каждого критерия значимости:");
+        text = "Бинарные отношения для каждого критерия значимости:\n";
+        System.out.print(text);
+        writer.write(text);
         ShowBO(arrOfBO);
         System.out.println();
+        writer.write("\n");
 
-        System.out.println("Механизм доминирования:");
+        text = "Механизм доминирования:\n";
+        System.out.print(text);
+        writer.write(text);
         int[] sumOfDominence;
         sumOfDominence = MechanismDominance(arrOfBO);
         System.out.println();
+        writer.write("\n");
 
-        System.out.println("Общее решение по механизму доминирования:");
+        text = "Общее решение по механизму доминирования:\n";
+        System.out.print(text);
+        writer.write(text);
         ShowSumOFDominanceLockng(sumOfDominence);
         System.out.println();
+        writer.write("\n");
 
-        System.out.println("Наилучший вариант:");
+        text = "Наилучший вариант:\n";
+        System.out.print(text);
+        writer.write(text);
         BestDominanceLocking(sumOfDominence);
         System.out.println();
+        writer.write("\n");
 
-        System.out.println("Механизм блокировок:");
+        text = "Механизм блокировок:\n";
+        System.out.print(text);
+        writer.write(text);
         int[] sumOfLocking;
         sumOfLocking = MechanismLocking(arrOfBO);
         System.out.println();
+        writer.write("\n");
 
-        System.out.println("Общее решение по механизму блокировки:");
+        text = "Общее решение по механизму блокировки:\n";
+        System.out.print(text);
+        writer.write(text);
         ShowSumOFDominanceLockng(sumOfLocking);
         System.out.println();
+        writer.write("\n");
 
-        System.out.println("Наилучший вариант:");
+        text = "Наилучший вариант:\n";
+        System.out.print(text);
+        writer.write(text);
         BestDominanceLocking(sumOfLocking);
         System.out.println();
+        writer.write("\n");
 
-        System.out.println("Механизм турнирный:");
+        text = "Механизм турнирный:\n";
+        System.out.print(text);
+        writer.write(text);
         double[] sumOfTournament = MechanismTournament(arrOfBO);
         System.out.println();
+        writer.write("\n");
 
-        System.out.println("Общее решение по турнирному механизму:");
+        text = "Общее решение по турнирному механизму:\n";
+        System.out.print(text);
+        writer.write(text);
         int index = 0;
         for(String str : arrOfSolutions)
         {
-            System.out.println(str + "- " + sumOfTournament[index++]);
+            text = str + "- " + sumOfTournament[index++] + "\n";
+            System.out.print(text);
+            writer.write(text);
         }
+        System.out.println();
+        writer.write("\n");
 
+        text = "Наилучший вариант:\n";
+        System.out.println(text);
+        writer.write(text);
+        int maxTour = 0;
+        for(int i = 0; i < sumOfTournament.length; i++)
+            if(sumOfTournament[i] > maxTour)
+                maxTour = i;
+        text = maxTour + ". " + arrOfSolutions.get(maxTour) + " - " + sumOfTournament[maxTour] + "\n";
+        System.out.print(text);
+        writer.write(text);
+        System.out.println();
+        writer.write("\n");
+
+        text = "Оптимальность:\n";
+        System.out.print(text);
+        writer.write(text);
+        Optimal(arrOfBO);
+
+        writer.close();
 
     }
 
-    private static void ShowSolutions(ArrayList<String> arr)
+    private static void ShowSolutions(ArrayList<String> arr) throws IOException
     {
         int i = 0;
         for (String str : arr)
-            System.out.println(++i + ".\t" + str);
+        {
+            String text = ++i + ".\t" + str + '\n';
+            System.out.print(text);
+            writer.write(text);
+        }
     }
 
-    private static void ShowCriterion(ArrayList<Criterion> arr)
+    private static void ShowCriterion(ArrayList<Criterion> arr) throws IOException
     {
         int i = 0;
         for(Criterion crit : arr)
-            System.out.println(++i + ".\t" + crit.getName());
+        {
+            String text = ++i + ".\t" + crit.getName() + "\n";
+            System.out.print(text);
+            writer.write(text);
+        }
 
     }
 
@@ -126,30 +193,42 @@ public class Task4
         return  arr;
     }
 
-    private static void ShowBO(ArrayList<byte[][]> arr)
+    private static void ShowBO(ArrayList<byte[][]> arr) throws IOException
     {
        int index = 0;
+       String text;
+
        for(byte[][] printBO : arr)
        {
-           System.out.println(arrOfCriterion.get(index++).getName() + ":");
+           text = arrOfCriterion.get(index++).getName() + ":\n";
+           System.out.print(text);
+           writer.write(text);
            for(int i = 0; i < arrOfSolutions.size(); i++)
            {
                for (int j = 0; j < arrOfSolutions.size(); j++)
-                   System.out.print(printBO[i][j] + "\t");
+               {
+                   text = printBO[i][j] + "\t";
+                   System.out.print(text);
+                   writer.write(text);
+               }
                System.out.println();
+               writer.write("\n");
            }
        }
     }
 
-    private  static int[] MechanismDominance(ArrayList<byte[][]> arrBO)
+    private  static int[] MechanismDominance(ArrayList<byte[][]> arrBO) throws IOException
     {
         int count;
         int index = 0;
         int[] sum = new int[arrOfSolutions.size()];
+        String text;
 
         for(byte[][] arr : arrBO)
         {
-            System.out.print(++index + ". " + arrOfCriterion.get(index-1).getName() + ": ");
+            text = ++index + ". " + arrOfCriterion.get(index-1).getName() + ": ";
+            System.out.print(text);
+            writer.write(text);
             for(int i = 0; i < arrOfSolutions.size(); i++)
             {
                 count = 0;
@@ -159,28 +238,36 @@ public class Task4
 
                 if(count == arrOfSolutions.size() - 1)
                     {
-                        System.out.print(i + 1 + " ");
+                        text = i + 1 + " ";
+                        System.out.print(text);
+                        writer.write(text);
                         sum[i] ++;
                     }
             }
             System.out.println();
+            writer.write("\n");
         }
         return sum;
     }
 
-    private static void ShowSumOFDominanceLockng(int[] arr)
+    private static void ShowSumOFDominanceLockng(int[] arr) throws IOException
     {
         int i = 0;
+        String  text;
 
         for(String str : arrOfSolutions)
         {
-            System.out.println(++i + ". " + str + ": " + arr[i-1]);
+            text = ++i + ". " + str + ": " + arr[i-1] + "\n";
+            System.out.print(text);
+            writer.write(text);
         }
     }
 
-    private static void BestDominanceLocking(int[] arr)
+    private static void BestDominanceLocking(int[] arr) throws IOException
     {
         int max = 0;
+        String text;
+
         for(int i = 0; i < arrOfSolutions.size(); i++)
         {
             if(max < arr[i])
@@ -189,46 +276,61 @@ public class Task4
         for(int i = 0; i < arrOfSolutions.size(); i++)
         {
             if(arr[i] == max)
-                System.out.println(i + 1 + ". " + arrOfSolutions.get(i) + " - " + max);
+            {
+                text = i + 1 + ". " + arrOfSolutions.get(i) + " - " + max + "\n";
+                System.out.print(text);
+                writer.write(text);
+            }
         }
     }
 
-    private static int[] MechanismLocking(ArrayList<byte[][]> arrBO)
+    private static int[] MechanismLocking(ArrayList<byte[][]> arrBO) throws IOException
     {
         int count;
         int index = 0;
         int[] sum = new int[arrOfSolutions.size()];
+        String text;
 
         for(byte[][] arr : arrBO)
         {
-            System.out.print(++index + ". " + arrOfCriterion.get(index - 1).getName() + ": ");
-            for (int j = 0; j < arrOfSolutions.size(); j++) {
+            text = ++index + ". " + arrOfCriterion.get(index - 1).getName() + ": ";
+            System.out.print(text);
+            writer.write(text);
+            for (int j = 0; j < arrOfSolutions.size(); j++)
+            {
                 count = 0;
                 for (int i = 0; i < arrOfSolutions.size(); i++)
                     if ((j != i) && (arr[i][j] == 1))
                         count++;
 
-                if (count == arrOfSolutions.size() - 1) {
-                    System.out.print(j + 1 + " ");
+                if (count == arrOfSolutions.size() - 1)
+                {
+                    text =  j + 1 + " ";
+                    System.out.print(text);
+                    writer.write(text);
                     sum[j]++;
                 }
             }
             System.out.println();
+            writer.write("\n");
         }
         return sum;
     }
 
-    private static double[] MechanismTournament(ArrayList<byte[][]> arrBO)
+    private static double[] MechanismTournament(ArrayList<byte[][]> arrBO) throws IOException
     {
         double[] sum = new double[arrOfSolutions.size()];
         double[] totalWeight = new double[arrOfSolutions.size()];
         int index = 0;
-        ArrayList<String> arrOfSolutionsSorted = new ArrayList<>(arrOfSolutions);
-        double[] sumSorted = new double[arrOfSolutions.size()];
+        String text;
+        //ArrayList<String> arrOfSolutionsSorted = new ArrayList<>(arrOfSolutions);
+        //double[] sumSorted = new double[arrOfSolutions.size()];
 
         for(byte[][] arr : arrBO)
         {
-            System.out.println(++index + ". " + arrOfCriterion.get(index - 1).getName() + ": ");
+            text = ++index + ". " + arrOfCriterion.get(index - 1).getName() + ": \n";
+            System.out.print(text);
+            writer.write(text);
             for(int i = 0; i < arrOfSolutions.size(); i++)
             {
                 for (int j = 0; j < arrOfSolutions.size(); j++) {
@@ -245,37 +347,166 @@ public class Task4
 
                 }
                 sum[i] = sum[i] * arrOfCriterion.get(index - 1).getCriteria();
-                System.out.println(i+1 + ". " + arrOfSolutions.get(i) + " - " + sum[i]);
+                text = i+1 + ". " + arrOfSolutions.get(i) + " - " + sum[i] + "\n";
+                System.out.print(text);
+                writer.write(text);
                 totalWeight[i] += sum[i];
                 //System.out.println(totalWeight[i]);
             }
 
             System.out.println();
+            writer.write("\n");
         }
 
-        sumSorted = totalWeight;
-        for(int i = 0; i < arrOfSolutions.size(); i++)
-        {
-            for(int j = 0; j < arrOfSolutions.size(); j++)
-            {
-                if(sumSorted[i] < sumSorted[j])
-                {
-                    double temp = sumSorted[i];
-                    sumSorted[i] = sumSorted[j];
-                    sumSorted[j] = temp;
-                    String str = arrOfSolutionsSorted.get(i);
-                    arrOfSolutionsSorted.set(i, arrOfSolutionsSorted.get(j));
-                    arrOfSolutionsSorted.set(j, str);
-                }
-            }
-        }
-
-
-        for(int i = 0; i < arrOfSolutionsSorted.size(); i++)
-        {
-            System.out.println(arrOfSolutionsSorted.get(i) + " - " + sumSorted[i]);
-        }
+//        sumSorted = totalWeight;
+//        for(int i = 0; i < arrOfSolutions.size(); i++)
+//        {
+//            for(int j = 0; j < arrOfSolutions.size(); j++)
+//            {
+//                if(sumSorted[i] < sumSorted[j])
+//                {
+//                    double temp = sumSorted[i];
+//                    sumSorted[i] = sumSorted[j];
+//                    sumSorted[j] = temp;
+//                    String str = arrOfSolutionsSorted.get(i);
+//                    arrOfSolutionsSorted.set(i, arrOfSolutionsSorted.get(j));
+//                    arrOfSolutionsSorted.set(j, str);
+//                }
+//            }
+//        }
+//
+//
+//        for(int i = 0; i < arrOfSolutionsSorted.size(); i++)
+//        {
+//            System.out.println(arrOfSolutionsSorted.get(i) + " - " + sumSorted[i]);
+//        }
         return totalWeight;
     }
 
+    private static void Optimal(ArrayList<byte[][]> arrBO) throws  IOException
+    {
+        int count;
+        int index = 0;
+        String text;
+
+        text = "Максимальная альтернатива:\n";
+        System.out.print(text);
+        writer.write(text);
+        for(byte[][] arr : arrBO)
+        {
+            text = ++index + ". " + arrOfCriterion.get(index - 1).getName() + ": \n";
+            System.out.print(text);
+            writer.write(text);
+            for (int i = 0; i < arrOfSolutions.size(); i++)
+            {
+                count = 0;
+                for (int j = 0; j < arrOfSolutions.size(); j++)
+                {
+                    if (arr[i][j] == 1)
+                        count += 1;
+                    if(arr[i][j] == 0 && arr[j][i] == 0)
+                        count += 1;
+                }
+
+                if (count == arrOfSolutions.size())
+                {
+                    text = i + 1 + ". " + arrOfSolutions.get(i) + "\n";
+                    System.out.print(text);
+                    writer.write(text);
+                }
+            }
+            System.out.println();
+            writer.write("\n");
+        }
+
+        index = 0;
+        text = "Строго максимальная альтернатива:\n";
+        System.out.print(text);
+        writer.write(text);
+        for(byte[][] arr : arrBO)
+        {
+            text = ++index + ". " + arrOfCriterion.get(index - 1).getName() + ": \n";
+            System.out.print(text);
+            writer.write(text);
+            for (int i = 0; i < arrOfSolutions.size(); i++)
+            {
+                count = 0;
+                for (int j = 0; j < arrOfSolutions.size(); j++)
+                {
+                    if ((arr[i][j] == 1 && arr[j][i] == 0) || i == j)
+                        count += 1;
+                    if(arr[i][j] == 0 && arr[j][i] == 0)
+                        count += 1;
+                }
+
+                if (count == arrOfSolutions.size())
+                {
+                    text = i + 1 + ". " + arrOfSolutions.get(i) + "\n";
+                    System.out.print(text);
+                    writer.write(text);
+                }
+            }
+            System.out.println();
+            writer.write("\n");
+        }
+
+        index = 0;
+        text = "Наибольшая альтернатива:\n";
+        System.out.print(text);
+        writer.write(text);
+        for(byte[][] arr : arrBO)
+        {
+            text = ++index + ". " + arrOfCriterion.get(index - 1).getName() + ": \n";
+            System.out.print(text);
+            writer.write(text);
+            for (int i = 0; i < arrOfSolutions.size(); i++)
+            {
+                count = 0;
+                for (int j = 0; j < arrOfSolutions.size(); j++)
+                {
+                    if (arr[i][j] == 1)
+                        count += 1;
+                }
+
+                if (count == arrOfSolutions.size())
+                {
+                    text = i + 1 + ". " + arrOfSolutions.get(i) + "\n";
+                    System.out.print(text);
+                    writer.write(text);
+                }
+            }
+            System.out.println();
+            writer.write("\n");
+        }
+
+        index = 0;
+        text = "Строго наибольшая альтернатива:\n";
+        System.out.print(text);
+        writer.write(text);
+        for(byte[][] arr : arrBO)
+        {
+            text = ++index + ". " + arrOfCriterion.get(index - 1).getName() + ": \n";
+            System.out.print(text);
+            writer.write(text);
+            for (int i = 0; i < arrOfSolutions.size(); i++)
+            {
+                count = 0;
+                for (int j = 0; j < arrOfSolutions.size(); j++)
+                {
+                    if ((arr[i][j] == 1 && arr[j][i] == 0) || i == j)
+                        count += 1;
+                }
+
+                if (count == arrOfSolutions.size())
+                {
+                    text = i+1 + ". " + arrOfSolutions.get(i) + "\n";
+                    System.out.print(text);
+                    writer.write(text);
+                }
+            }
+            System.out.println();
+            writer.write("\n");
+        }
+
+    }
 }
