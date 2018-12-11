@@ -23,10 +23,9 @@ public class Task4
         arrOfSolutions.add("Skoda Rapid");
 
         String text = "Возможные решения:\n";
-        System.out.print(text);
         writer.write(text);
         ShowSolutions(arrOfSolutions);
-        System.out.println();
+        writer.write("\n");
 
         int [] costAuto = {-723, -561, -627, -965, -572, -499, -772};
         int [] klirens = {15, 18, 17, 16, 18, 17, 15};
@@ -48,101 +47,76 @@ public class Task4
         arrOfCriterion.add(new Criterion("Расход топлива", 0.1, fuelConsumption));
 
         text = "Критерии:\n";
-        System.out.print(text);
         writer.write(text);
         ShowCriterion(arrOfCriterion);
-        System.out.println();
         writer.write("\n");
 
         arrOfBO = new ArrayList<>();
         arrOfBO = CreateBO(arrOfSolutions, arrOfCriterion);
 
         text = "Бинарные отношения для каждого критерия значимости:\n";
-        System.out.print(text);
         writer.write(text);
         ShowBO(arrOfBO);
-        System.out.println();
         writer.write("\n");
 
         text = "Механизм доминирования:\n";
-        System.out.print(text);
         writer.write(text);
         int[] sumOfDominence;
         sumOfDominence = MechanismDominance(arrOfBO);
-        System.out.println();
         writer.write("\n");
 
         text = "Общее решение по механизму доминирования:\n";
-        System.out.print(text);
         writer.write(text);
         ShowSumOFDominanceLockng(sumOfDominence);
-        System.out.println();
         writer.write("\n");
 
         text = "Наилучший вариант:\n";
-        System.out.print(text);
         writer.write(text);
         BestDominanceLocking(sumOfDominence);
-        System.out.println();
         writer.write("\n");
 
         text = "Механизм блокировок:\n";
-        System.out.print(text);
         writer.write(text);
         int[] sumOfLocking;
         sumOfLocking = MechanismLocking(arrOfBO);
-        System.out.println();
         writer.write("\n");
 
         text = "Общее решение по механизму блокировки:\n";
-        System.out.print(text);
         writer.write(text);
         ShowSumOFDominanceLockng(sumOfLocking);
-        System.out.println();
         writer.write("\n");
 
         text = "Наилучший вариант:\n";
-        System.out.print(text);
         writer.write(text);
         BestDominanceLocking(sumOfLocking);
-        System.out.println();
         writer.write("\n");
 
         text = "Механизм турнирный:\n";
-        System.out.print(text);
         writer.write(text);
         double[] sumOfTournament = MechanismTournament(arrOfBO);
-        System.out.println();
         writer.write("\n");
 
         text = "Общее решение по турнирному механизму:\n";
-        System.out.print(text);
         writer.write(text);
         int index = 0;
         for(String str : arrOfSolutions)
         {
             text = str + "- " + sumOfTournament[index++] + "\n";
-            System.out.print(text);
             writer.write(text);
         }
-        System.out.println();
         writer.write("\n");
 
         text = "Наилучший вариант:\n";
-        System.out.println(text);
         writer.write(text);
         int maxTour = 0;
         for(int i = 0; i < sumOfTournament.length; i++)
             if(sumOfTournament[i] > maxTour)
                 maxTour = i;
         text = maxTour + ". " + arrOfSolutions.get(maxTour) + " - " + sumOfTournament[maxTour] + "\n";
-        System.out.print(text);
         writer.write(text);
-        System.out.println();
         writer.write("\n");
 
         text = "Оптимальность:\n";
-        System.out.print(text);
         writer.write(text);
         Optimal(arrOfBO);
 
@@ -156,7 +130,6 @@ public class Task4
         for (String str : arr)
         {
             String text = ++i + ".\t" + str + '\n';
-            System.out.print(text);
             writer.write(text);
         }
     }
@@ -167,7 +140,6 @@ public class Task4
         for(Criterion crit : arr)
         {
             String text = ++i + ".\t" + crit.getName() + "\n";
-            System.out.print(text);
             writer.write(text);
         }
 
@@ -201,17 +173,14 @@ public class Task4
        for(byte[][] printBO : arr)
        {
            text = arrOfCriterion.get(index++).getName() + ":\n";
-           System.out.print(text);
            writer.write(text);
            for(int i = 0; i < arrOfSolutions.size(); i++)
            {
                for (int j = 0; j < arrOfSolutions.size(); j++)
                {
                    text = printBO[i][j] + "\t";
-                   System.out.print(text);
                    writer.write(text);
                }
-               System.out.println();
                writer.write("\n");
            }
        }
@@ -227,7 +196,6 @@ public class Task4
         for(byte[][] arr : arrBO)
         {
             text = ++index + ". " + arrOfCriterion.get(index-1).getName() + ": ";
-            System.out.print(text);
             writer.write(text);
             for(int i = 0; i < arrOfSolutions.size(); i++)
             {
@@ -239,12 +207,10 @@ public class Task4
                 if(count == arrOfSolutions.size() - 1)
                     {
                         text = i + 1 + " ";
-                        System.out.print(text);
                         writer.write(text);
                         sum[i] ++;
                     }
             }
-            System.out.println();
             writer.write("\n");
         }
         return sum;
@@ -258,7 +224,6 @@ public class Task4
         for(String str : arrOfSolutions)
         {
             text = ++i + ". " + str + ": " + arr[i-1] + "\n";
-            System.out.print(text);
             writer.write(text);
         }
     }
@@ -278,7 +243,6 @@ public class Task4
             if(arr[i] == max)
             {
                 text = i + 1 + ". " + arrOfSolutions.get(i) + " - " + max + "\n";
-                System.out.print(text);
                 writer.write(text);
             }
         }
@@ -294,7 +258,6 @@ public class Task4
         for(byte[][] arr : arrBO)
         {
             text = ++index + ". " + arrOfCriterion.get(index - 1).getName() + ": ";
-            System.out.print(text);
             writer.write(text);
             for (int j = 0; j < arrOfSolutions.size(); j++)
             {
@@ -306,12 +269,10 @@ public class Task4
                 if (count == arrOfSolutions.size() - 1)
                 {
                     text =  j + 1 + " ";
-                    System.out.print(text);
                     writer.write(text);
                     sum[j]++;
                 }
             }
-            System.out.println();
             writer.write("\n");
         }
         return sum;
@@ -329,7 +290,6 @@ public class Task4
         for(byte[][] arr : arrBO)
         {
             text = ++index + ". " + arrOfCriterion.get(index - 1).getName() + ": \n";
-            System.out.print(text);
             writer.write(text);
             for(int i = 0; i < arrOfSolutions.size(); i++)
             {
@@ -348,13 +308,10 @@ public class Task4
                 }
                 sum[i] = sum[i] * arrOfCriterion.get(index - 1).getCriteria();
                 text = i+1 + ". " + arrOfSolutions.get(i) + " - " + sum[i] + "\n";
-                System.out.print(text);
                 writer.write(text);
                 totalWeight[i] += sum[i];
                 //System.out.println(totalWeight[i]);
             }
-
-            System.out.println();
             writer.write("\n");
         }
 
@@ -390,12 +347,10 @@ public class Task4
         String text;
 
         text = "Максимальная альтернатива:\n";
-        System.out.print(text);
         writer.write(text);
         for(byte[][] arr : arrBO)
         {
             text = ++index + ". " + arrOfCriterion.get(index - 1).getName() + ": \n";
-            System.out.print(text);
             writer.write(text);
             for (int i = 0; i < arrOfSolutions.size(); i++)
             {
@@ -411,22 +366,18 @@ public class Task4
                 if (count == arrOfSolutions.size())
                 {
                     text = i + 1 + ". " + arrOfSolutions.get(i) + "\n";
-                    System.out.print(text);
                     writer.write(text);
                 }
             }
-            System.out.println();
             writer.write("\n");
         }
 
         index = 0;
         text = "Строго максимальная альтернатива:\n";
-        System.out.print(text);
         writer.write(text);
         for(byte[][] arr : arrBO)
         {
             text = ++index + ". " + arrOfCriterion.get(index - 1).getName() + ": \n";
-            System.out.print(text);
             writer.write(text);
             for (int i = 0; i < arrOfSolutions.size(); i++)
             {
@@ -442,22 +393,18 @@ public class Task4
                 if (count == arrOfSolutions.size())
                 {
                     text = i + 1 + ". " + arrOfSolutions.get(i) + "\n";
-                    System.out.print(text);
                     writer.write(text);
                 }
             }
-            System.out.println();
             writer.write("\n");
         }
 
         index = 0;
         text = "Наибольшая альтернатива:\n";
-        System.out.print(text);
         writer.write(text);
         for(byte[][] arr : arrBO)
         {
             text = ++index + ". " + arrOfCriterion.get(index - 1).getName() + ": \n";
-            System.out.print(text);
             writer.write(text);
             for (int i = 0; i < arrOfSolutions.size(); i++)
             {
@@ -471,22 +418,18 @@ public class Task4
                 if (count == arrOfSolutions.size())
                 {
                     text = i + 1 + ". " + arrOfSolutions.get(i) + "\n";
-                    System.out.print(text);
                     writer.write(text);
                 }
             }
-            System.out.println();
             writer.write("\n");
         }
 
         index = 0;
         text = "Строго наибольшая альтернатива:\n";
-        System.out.print(text);
         writer.write(text);
         for(byte[][] arr : arrBO)
         {
             text = ++index + ". " + arrOfCriterion.get(index - 1).getName() + ": \n";
-            System.out.print(text);
             writer.write(text);
             for (int i = 0; i < arrOfSolutions.size(); i++)
             {
@@ -500,13 +443,10 @@ public class Task4
                 if (count == arrOfSolutions.size())
                 {
                     text = i+1 + ". " + arrOfSolutions.get(i) + "\n";
-                    System.out.print(text);
                     writer.write(text);
                 }
             }
-            System.out.println();
             writer.write("\n");
         }
-
     }
 }
