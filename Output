@@ -1,0 +1,335 @@
+Возможные решения:
+1.	Kia rio
+2.	Renault Logan
+3.	Hyundai Solaris
+4.	Ford Focus
+5.	Nissan Almera
+6.	Volkswagen Polo
+7.	Skoda Rapid
+
+Критерии:
+1.	Стоимость авто
+2.	Клиренс
+3.	Стоимость обслуживания
+4.	Надежность
+5.	Безопасность
+6.	Комплектация
+7.	Ликвидность
+8.	Расход топлива
+
+Бинарные отношения для каждого критерия значимости:
+Стоимость авто:
+1	0	0	1	0	0	1	
+1	1	1	1	1	0	1	
+1	0	1	1	0	0	1	
+0	0	0	1	0	0	0	
+1	0	1	1	1	0	1	
+1	1	1	1	1	1	1	
+0	0	0	1	0	0	1	
+Клиренс:
+1	0	0	0	0	0	1	
+1	1	1	1	1	1	1	
+1	0	1	1	0	1	1	
+1	0	0	1	0	0	1	
+1	1	1	1	1	1	1	
+1	0	1	1	0	1	1	
+1	0	0	0	0	0	1	
+Стоимость обслуживания:
+1	0	1	1	1	1	1	
+1	1	1	1	1	1	1	
+1	0	1	1	1	1	1	
+0	0	0	1	0	1	0	
+1	0	1	1	1	1	1	
+0	0	0	1	0	1	0	
+1	0	1	1	1	1	1	
+Надежность:
+1	1	1	0	1	1	1	
+0	1	0	0	0	0	0	
+1	1	1	0	1	1	1	
+1	1	1	1	1	1	1	
+1	1	1	0	1	1	1	
+1	1	1	0	1	1	1	
+1	1	1	0	1	1	1	
+Безопасность:
+1	1	1	0	1	1	1	
+0	1	0	0	1	0	0	
+1	1	1	0	1	1	1	
+1	1	1	1	1	1	1	
+0	1	0	0	1	0	0	
+1	1	1	0	1	1	1	
+1	1	1	0	1	1	1	
+Комплектация:
+1	1	1	1	1	1	1	
+0	1	0	0	0	0	0	
+0	1	1	0	1	1	0	
+1	1	1	1	1	1	1	
+0	1	1	0	1	1	0	
+0	1	1	0	1	1	0	
+1	1	1	1	1	1	1	
+Ликвидность:
+1	1	1	1	1	1	1	
+1	1	1	1	1	1	1	
+1	1	1	1	1	1	1	
+1	1	1	1	1	1	1	
+0	0	0	0	1	0	0	
+1	1	1	1	1	1	1	
+1	1	1	1	1	1	1	
+Расход топлива:
+1	1	1	1	1	1	1	
+1	1	1	1	1	1	1	
+1	1	1	1	1	1	1	
+0	0	0	1	1	0	0	
+0	0	0	1	1	0	0	
+1	1	1	1	1	1	1	
+1	1	1	1	1	1	1	
+
+Механизм доминирования:
+1. Стоимость авто: 6 
+2. Клиренс: 2 5 
+3. Стоимость обслуживания: 2 
+4. Надежность: 4 
+5. Безопасность: 4 
+6. Комплектация: 1 4 7 
+7. Ликвидность: 1 2 3 4 6 7 
+8. Расход топлива: 1 2 3 6 7 
+
+Общее решение по механизму доминирования:
+1. Kia rio: 3
+2. Renault Logan: 4
+3. Hyundai Solaris: 2
+4. Ford Focus: 4
+5. Nissan Almera: 1
+6. Volkswagen Polo: 3
+7. Skoda Rapid: 3
+
+Наилучший вариант:
+2. Renault Logan - 4
+4. Ford Focus - 4
+
+Механизм блокировок:
+1. Стоимость авто: 4 
+2. Клиренс: 1 7 
+3. Стоимость обслуживания: 4 6 
+4. Надежность: 2 
+5. Безопасность: 2 5 
+6. Комплектация: 2 
+7. Ликвидность: 5 
+8. Расход топлива: 4 5 
+
+Общее решение по механизму блокировки:
+1. Kia rio: 1
+2. Renault Logan: 3
+3. Hyundai Solaris: 0
+4. Ford Focus: 3
+5. Nissan Almera: 3
+6. Volkswagen Polo: 1
+7. Skoda Rapid: 1
+
+Наилучший вариант:
+2. Renault Logan - 3
+4. Ford Focus - 3
+5. Nissan Almera - 3
+
+Механизм турнирный:
+1. Стоимость авто: 
+1. Kia rio - 0.4
+2. Renault Logan - 1.0
+3. Hyundai Solaris - 0.6000000000000001
+4. Ford Focus - 0.0
+5. Nissan Almera - 0.8
+6. Volkswagen Polo - 1.2000000000000002
+7. Skoda Rapid - 0.2
+
+2. Клиренс: 
+1. Kia rio - 0.045000000000000005
+2. Renault Logan - 0.325
+3. Hyundai Solaris - 0.205
+4. Ford Focus - 0.1
+5. Nissan Almera - 0.315
+6. Volkswagen Polo - 0.23500000000000001
+7. Skoda Rapid - 0.034999999999999996
+
+3. Стоимость обслуживания: 
+1. Kia rio - 0.35450000000000004
+2. Renault Logan - 0.6325000000000001
+3. Hyundai Solaris - 0.37050000000000005
+4. Ford Focus - 0.06
+5. Nissan Almera - 0.3815
+6. Volkswagen Polo - 0.0735
+7. Skoda Rapid - 0.35350000000000004
+
+4. Надежность: 
+1. Kia rio - 0.5031749999999999
+2. Renault Logan - 0.094875
+3. Hyundai Solaris - 0.505575
+4. Ford Focus - 0.909
+5. Nissan Almera - 0.5072249999999999
+6. Volkswagen Polo - 0.461025
+7. Skoda Rapid - 0.5030249999999999
+
+5. Безопасность: 
+1. Kia rio - 0.800635
+2. Renault Logan - 0.11897500000000001
+3. Hyundai Solaris - 0.8011150000000001
+4. Ford Focus - 1.3818000000000001
+5. Nissan Almera - 0.201445
+6. Volkswagen Polo - 0.792205
+7. Skoda Rapid - 0.800605
+
+6. Комплектация: 
+1. Kia rio - 0.5800635
+2. Renault Logan - 0.011897500000000002
+3. Hyundai Solaris - 0.2801115
+4. Ford Focus - 0.6381800000000001
+5. Nissan Almera - 0.22014450000000002
+6. Volkswagen Polo - 0.27922050000000004
+7. Skoda Rapid - 0.5800605
+
+7. Ликвидность: 
+1. Kia rio - 0.40800634999999996
+2. Renault Logan - 0.35118975
+3. Hyundai Solaris - 0.3780111500000001
+4. Ford Focus - 0.413818
+5. Nissan Almera - 0.022014450000000005
+6. Volkswagen Polo - 0.37792205
+7. Skoda Rapid - 0.40800605
+
+8. Расход топлива: 
+1. Kia rio - 0.440800635
+2. Renault Logan - 0.43511897499999996
+3. Hyundai Solaris - 0.437801115
+4. Ford Focus - 0.09138180000000001
+5. Nissan Almera - 0.052201445000000006
+6. Volkswagen Polo - 0.43779220500000005
+7. Skoda Rapid - 0.440800605
+
+
+Общее решение по турнирному механизму:
+Kia rio- 3.532180485
+Renault Logan- 2.969556225
+Hyundai Solaris- 3.5781137650000003
+Ford Focus- 3.5941798000000005
+Nissan Almera- 2.499530395
+Volkswagen Polo- 3.856664755
+Skoda Rapid- 3.320997155
+
+Наилучший вариант:
+5. Volkswagen Polo - 3.856664755
+
+Оптимальность:
+Максимальная альтернатива:
+1. Стоимость авто: 
+6. Volkswagen Polo
+
+2. Клиренс: 
+2. Renault Logan
+5. Nissan Almera
+
+3. Стоимость обслуживания: 
+2. Renault Logan
+
+4. Надежность: 
+4. Ford Focus
+
+5. Безопасность: 
+4. Ford Focus
+
+6. Комплектация: 
+1. Kia rio
+4. Ford Focus
+7. Skoda Rapid
+
+7. Ликвидность: 
+1. Kia rio
+2. Renault Logan
+3. Hyundai Solaris
+4. Ford Focus
+6. Volkswagen Polo
+7. Skoda Rapid
+
+8. Расход топлива: 
+1. Kia rio
+2. Renault Logan
+3. Hyundai Solaris
+6. Volkswagen Polo
+7. Skoda Rapid
+
+Строго максимальная альтернатива:
+1. Стоимость авто: 
+6. Volkswagen Polo
+
+2. Клиренс: 
+
+3. Стоимость обслуживания: 
+2. Renault Logan
+
+4. Надежность: 
+4. Ford Focus
+
+5. Безопасность: 
+4. Ford Focus
+
+6. Комплектация: 
+
+7. Ликвидность: 
+
+8. Расход топлива: 
+
+Наибольшая альтернатива:
+1. Стоимость авто: 
+6. Volkswagen Polo
+
+2. Клиренс: 
+2. Renault Logan
+5. Nissan Almera
+
+3. Стоимость обслуживания: 
+2. Renault Logan
+
+4. Надежность: 
+4. Ford Focus
+
+5. Безопасность: 
+4. Ford Focus
+
+6. Комплектация: 
+1. Kia rio
+4. Ford Focus
+7. Skoda Rapid
+
+7. Ликвидность: 
+1. Kia rio
+2. Renault Logan
+3. Hyundai Solaris
+4. Ford Focus
+6. Volkswagen Polo
+7. Skoda Rapid
+
+8. Расход топлива: 
+1. Kia rio
+2. Renault Logan
+3. Hyundai Solaris
+6. Volkswagen Polo
+7. Skoda Rapid
+
+Строго наибольшая альтернатива:
+1. Стоимость авто: 
+6. Volkswagen Polo
+
+2. Клиренс: 
+
+3. Стоимость обслуживания: 
+2. Renault Logan
+
+4. Надежность: 
+4. Ford Focus
+
+5. Безопасность: 
+4. Ford Focus
+
+6. Комплектация: 
+
+7. Ликвидность: 
+
+8. Расход топлива: 
+
